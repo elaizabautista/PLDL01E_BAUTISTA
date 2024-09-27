@@ -31,7 +31,7 @@ gross_earnings = basic_pay + overtime_pay + honorarium
 # Calculate deductions
 withholding_tax = 0.10 * gross_earnings
 sss_contribution = 0.05 * gross_earnings
-philhealth_contribution = 0.03 * gross_earnings
+philhealth_contribution = 0.05 * gross_earnings
 deductions = absences + tardy + withholding_tax + sss_contribution + pagibig_contribution + philhealth_contribution
 net_pay = gross_earnings - deductions
 
