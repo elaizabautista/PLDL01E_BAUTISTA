@@ -23,7 +23,7 @@ class Employee:
         self.basic_pay = self.emp_rate_per_hour * self.emp_num_of_hours_per_payday
         self.overtime_pay = self.emp_hour_overtime * self.emp_rate_per_hour
         self.emp_gross_earnings = self.basic_pay + self.overtime_pay + self.honorarium_pay
-        self.emp_tardiness = self.emp_num_of_absences * self.emp_rate_per_hour
+        self.emp_absences = self.emp_num_of_absences * self.emp_rate_per_hour
         self.emp_tardiness = self.emp_num_tardiness * self.emp_rate_per_hour
 
     def emp_sss_contribution(self):
@@ -113,6 +113,7 @@ class Employee:
         elif self.emp_gross_earnings >= 23750 and self.emp_gross_earnings < 24249.99:
             self.sss_contribution = 900.00
         elif self.emp_gross_earnings >= 24250 and self.emp_gross_earnings < 24749.99:
+            self.sss_contribution = 900.00
         else:
             self.sss_contribution = 900.00
 
@@ -123,12 +124,50 @@ class Employee:
         else:
             self.philhealth_contribution = self.emp_gross_earnings * 0.450
 
-        # Setting conditios in getting Tax Contribution
+        # Setting conditions in getting Tax Contribution
 
     def emp_tax_contribution(self):
         if self.emp_gross_earnings < 10417:
             self.tax_contribution = 0.00
-            elif self.emp_gross_earnings >= 10417 and self.emp_gross_earnings < 16666:
-            self.sss_contribution = 900.00
+        elif self.emp_gross_earnings >= 10417 and self.emp_gross_earnings < 16666:
+            self.tax_contribution = ((self.emp_gross_earnings - 10417) * 0.15 + 0.00)
+        elif self.emp_gross_earnings >= 16667 and self.emp_gross_earnings < 33332:
+            self.tax_contribution = ((self.emp_gross_earnings - 16667) * 0.20 + 937.50)
+        elif self.emp_gross_earnings >= 33333 and self.emp_gross_earnings < 83332:
+            self.tax_contribution = ((self.emp_gross_earnings - 33333) * 0.25 + 4270.70)
+        elif self.emp_gross_earnings >= 83333 and self.emp_gross_earnings < 333332:
+            self.tax_contribution = ((self.emp_gross_earnings - 83333) * 0.30 + 16770.70)
+        else:
+            self.tax_contribution = ((self.emp_gross_earnings - 333333) * 0.35 + 91770.70)
+
+    def emp_total_deduction(self):
+        self.deduction = self.emp_absences + self.emp_tardiness + self.tax_contribution + self.sss_contribution + self.philhealth_contribution + self.hdmf_contribution
+
+    def emp_employee_netpay(self):
+        self.net_pay = self.emp_gross_earnings - self.deduction
+    # displayStudent method of class Employee
+    def emp_displayEmployee(self):
+        print("Company Name: ", self.company_name)
+        print("Employee Department: ", self.employee_department)
+        print("Employee Name: ", self.employee_name)
+        print("Employee Code: ", self.employee_code)
+        print("Cut-Off Date: ", self.salary_cut_off)
+        print("Basic Pay: %.2f" % self.basic_pay)
+        print("Overtime Pay: %.2f" % self.overtime_pay)
+        print("Gross Income: %.2f" % self.emp_gross_earnings)
+        print("Absences: %.2f" % self.emp_absences)
+        print("Tardiness: %.2f" % self.emp_tardiness)
+        print("SSS Contrubution: %.2f" % self.sss_contribution)
+        print("Philhealth Contribution: %.2f" % self.philhealth_contribution)
+        print("Net Income: %.2f" % self.net_pay)
+
+emp1 = Employee()
+emp1.emp_salary_computation()
+emp1.emp_sss_contribution()
+emp1.emp_philhealth_contribution()
+emp1.emp_tax_contribution()
+emp1.emp_total_deduction()
+emp1.emp_employee_netpay()
+emp1.emp_displayEmployee()
 
 
