@@ -53,6 +53,10 @@ class Employee_Salary:
         self.emp_absences = emp_num_of_absences * emp_rate_per_hour
         return self.emp_absences
 
+    def get_overtime_pay(self, emp_hour_overtime, emp_rate_per_hour):
+        self.overtime_pay = emp_hour_overtime * emp_rate_per_hour
+        return self.overtime_pay
+
     def get_tardiness_deduction(self, emp_rate_per_hour, tardiness_num_hours):
         self.tardiness_deduction = tardiness_num_hours * emp_rate_per_hour
         return self.tardiness_deduction
