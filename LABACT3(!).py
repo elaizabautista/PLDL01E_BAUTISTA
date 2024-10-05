@@ -19,6 +19,8 @@ honorarium = float(input("Enter Honorarium: "))
 tardy_hours = float(input("Enter Tardy Hours: "))
 pagibig_contribution = 100.00
 
+
+
 # Calculate
 basic_pay = rate_per_hour * hours_per_payday
 overtime_pay = rate_per_hour * overtime_hours
