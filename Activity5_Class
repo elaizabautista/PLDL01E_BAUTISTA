@@ -1,0 +1,104 @@
+class StudentInfo:
+    tuition_fee_per_unit = 1551.00
+
+    def __init__(self):
+        self.student_name = ""
+        self.student_course = ""
+        self.student_number = ""
+        self.academic_year = ""
+        self.printed_date = ""
+        self.subjects = []
+        self.total_units = 0.00
+
+    def set_student_data(self, name, course, number, year, date):
+        self.student_name = name
+        self.student_course = course
+        self.student_number = number
+        self.academic_year = year
+        self.printed_date = date
+
+    def add_subject(self, subject, units, section):
+        self.subjects.append({"subject": subject, "units": units, "section": section})
+        self.total_units += units
+
+    def display_student_info(self):
+        print("\n==================================================")
+        print("           STUDENT INFORMATION")
+        print("==================================================")
+        print(f"Student Name     : {self.student_name}")
+        print(f"Course           : {self.student_course}")
+        print(f"Student Number   : {self.student_number}")
+        print(f"Academic Year    : {self.academic_year}")
+        print(f"Date Printed     : {self.printed_date}")
+        print("\nSubjects:")
+        print("-----------------------------------------------")
+        for subj in self.subjects:
+            print(f"Section: {subj['section']:<10} | Subject: {subj['subject']:<25} | Units: {subj['units']}")
+        print("-----------------------------------------------")
+        print(f"Total Units: {self.total_units}")
+        print("==================================================")
+
+class AssessmentAmount:
+    tuition_fee_per_unit = 1551.00
+
+    def __init__(self):
+        self.assessment_fees = {
+            "adu_chronical": 0.0,
+            "athletic": 0.0,
+            "audio_visual_library": 0.0,
+            "ausg": 0.0,
+            "cultural_fee": 0.0,
+            "energy_cost": 0.0,
+            "guidance": 0.0,
+            "insurance_fee": 0.0,
+            "learning_management_system": 0.0,
+            "library_fee": 0.0,
+            "medical_dental": 0.0,
+            "registration": 0.0,
+            "rso": 0.0,
+            "student_activities": 0.0,
+            "student_nurturance": 0.0,
+            "technology_fee": 0.0,
+            "test_papers": 0.0,
+            "downpayment": 0.0
+        }
+
+    def calculate_tuition_fee(self, total_units):
+        return total_units * self.tuition_fee_per_unit
+
+    def calculate_total_assessment(self, total_units):
+        tuition_fee = self.calculate_tuition_fee(total_units)
+        total = sum(self.assessment_fees.values()) + tuition_fee - self.assessment_fees["downpayment"]
+        return tuition_fee, total
+
+    def display_assessment(self, tuition_fee, total_assessment):
+        print("\n==================================================")
+        print("              ASSESSMENT OF FEES")
+        print("==================================================")
+        print(f"Tuition Fee                : {tuition_fee:,.2f}")
+        print(f"Adu Chronical Fee          : {self.assessment_fees['adu_chronical']:,.2f}")
+        print(f"Athletic Fee               : {self.assessment_fees['athletic']:,.2f}")
+        print(f"Audio Visual Library Fee   : {self.assessment_fees['audio_visual_library']:,.2f}")
+        print(f"AUSG Fee                   : {self.assessment_fees['ausg']:,.2f}")
+        print(f"Cultural Fee               : {self.assessment_fees['cultural_fee']:,.2f}")
+        print(f"Energy Cost Fee            : {self.assessment_fees['energy_cost']:,.2f}")
+        print(f"Guidance Fee               : {self.assessment_fees['guidance']:,.2f}")
+        print(f"Insurance Fee              : {self.assessment_fees['insurance_fee']:,.2f}")
+        print(f"Learning Management System Fee : {self.assessment_fees['learning_management_system']:,.2f}")
+        print(f"Library Fee                : {self.assessment_fees['library_fee']:,.2f}")
+        print(f"Medical & Dental Fee       : {self.assessment_fees['medical_dental']:,.2f}")
+        print(f"Registration Fee           : {self.assessment_fees['registration']:,.2f}")
+        print(f"RSO Fee                    : {self.assessment_fees['rso']:,.2f}")
+        print(f"Student Activities Fee     : {self.assessment_fees['student_activities']:,.2f}")
+        print(f"Student Nurturance Fee     : {self.assessment_fees['student_nurturance']:,.2f}")
+        print(f"Technology Fee             : {self.assessment_fees['technology_fee']:,.2f}")
+        print(f"Test Papers Fee            : {self.assessment_fees['test_papers']:,.2f}")
+        print(f"Downpayment                : {self.assessment_fees['downpayment']:,.2f}")
+        print("-----------------------------------------------")
+        print(f"Total Assessment           : {total_assessment:,.2f}")
+        print("==================================================")
+        term_payment = total_assessment / 3
+        print(f"Prelims Payment            : {term_payment:,.2f}")
+        print(f"Midterm Payment            : {term_payment:,.2f}")
+        print(f"Final Payment              : {term_payment:,.2f}")
+        print("==================================================")
