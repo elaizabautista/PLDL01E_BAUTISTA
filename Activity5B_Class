@@ -1,0 +1,33 @@
+from Activity5_Class import StudentInfo
+
+
+class StudentInfoInput:
+    def get_student_input(self):
+        # Get student information
+        print("\n==================================================")
+        print("        STUDENT INFORMATION INPUT")
+        print("==================================================")
+
+        name = input("Enter Student Name: ")
+        course = input("Enter Student Course: ")
+        student_number = input("Enter Student Number: ")
+        academic_year = input("Enter Academic Year: ")
+        printed_date = input("Enter Date Printed: ")
+
+        student = StudentInfo()
+        student.set_student_data(name, course, student_number, academic_year, printed_date)
+
+        # Get subject information
+        num_subjects = int(input("Enter Number of Subjects: "))
+        for _ in range(num_subjects):
+            subject = input("Enter Subject Name: ")
+            units = int(input("Enter Units: "))
+            section = input("Enter Section: ")
+            student.add_subject(subject, units, section)
+
+        student.display_student_info()
+
+
+if __name__ == "__main__":
+    input_handler = StudentInfoInput()
+    input_handler.get_student_input()
