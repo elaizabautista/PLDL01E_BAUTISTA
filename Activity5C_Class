@@ -1,0 +1,28 @@
+from Activity5_Class import AssessmentAmount
+
+
+class AssessmentInput:
+    def get_assessment_input(self):
+        # Get total units
+        print("\n==================================================")
+        print("              ASSESSMENT INPUT")
+        print("==================================================")
+
+        total_units = int(input("Enter Total Units: "))
+
+        assessment = AssessmentAmount()
+
+        for fee in assessment.assessment_fees:
+            if fee != "downpayment":
+                assessment.assessment_fees[fee] = float(input(f"Enter {fee.replace('_', ' ').title()}: "))
+
+        assessment.assessment_fees["downpayment"] = float(input("Enter Downpayment: "))
+
+        # Calculate and display assessment
+        tuition_fee, total_assessment = assessment.calculate_total_assessment(total_units)
+        assessment.display_assessment(tuition_fee, total_assessment)
+
+
+if __name__ == "__main__":
+    assessment_handler = AssessmentInput()
+    assessment_handler.get_assessment_input()
