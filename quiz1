@@ -1,0 +1,30 @@
+# electric_bill.py
+
+from datetime import datetime as Time1, timedelta as Time2
+
+class ElectricBill:
+    def __init__(self):
+        self.customer_name = input("Enter Customer Name: ")
+        self.service_id = input("Enter Service ID Number: ")
+        self.address = input("Enter Address: ")
+        self.billing_period = input("Enter Billing Period (format: '01 Sep 2024 to 30 Sep 2024'): ")
+        self.bill_date = input("Enter Bill Date: ")
+        self.due_date = input("Enter Due Date: ")
+        self.meter_number = input("Enter Meter Number: ")
+
+        self.current_reading = float(input("Enter Current Reading (kWh): "))
+        self.previous_reading = float(input("Enter Previous Reading (kWh): "))
+        self.consumption = self.current_reading - self.previous_reading
+
+        self.rate_per_kwh = float(input("Enter Rate per kWh: "))
+
+        self.total_amount_due = self.consumption * self.rate_per_kwh
+
+    def get_next_meter_reading_date(self):
+        try:
+            start_date_str, end_date_str = self.billing_period.split(' to ')
+            end_date = Time1.strptime(end_date_str.strip(), '%d %b %Y')
+            next_reading_date = end_date + Time2(days=1)
+            return next_reading_date.strftime('%d %b %Y')
+        except ValueError:
+            return "Invalid billing period format. Please use '01 Sep 2024 to 30 Sep 2024'."
