@@ -1,0 +1,52 @@
+# main.py
+
+from electric_bill import ElectricBill
+
+def display_bill(billing_info):
+    total_amount_due = billing_info.total_amount_due
+    print("\n==================== Electric Bill ====================\n")
+    print(f"Summary for Customer Account Number (CAN) {billing_info.service_id}\n")
+    print(f"Customer Name :{billing_info.customer_name}")
+    print(f"Address       :{billing_info.address}\n")
+
+    print(f"|  Previous Balance  |  ", end="")
+    if billing_info.previous_reading == 0:
+        print("Thank you for your payment!")
+    else:
+        print(f"Please pay the amount of PHP {billing_info.previous_reading:.2f}")
+
+    print("\n|      Current Charges      |")
+    print(f"|   Amount due: PHP {total_amount_due:.2f}   |   Due Date: {billing_info.due_date}   |")
+    print("|    Total amount Due    |")
+    print(f"|    PHP {total_amount_due:.2f}    |\n")
+
+    print("\n|----------------------------------------------|")
+    print("|                Service Info                  |")
+    print("|----------------------------------------------|")
+    print(f"|Service ID Number       : {billing_info.service_id}")
+    print(f"|Customer Name           : {billing_info.customer_name}")
+    print(f"|Service Address         : {billing_info.address}\n")
+
+    print("\n|----------------------------------------------|")
+    print("|                Billing Info                  |")
+    print("|----------------------------------------------|")
+    print(f"| Bill Date               : {billing_info.bill_date}")
+    print(f"| Meter Reading Date      : {billing_info.meter_number}")
+    print(f"| Billing Period          : {billing_info.billing_period}")
+    print(f"| Due Date                : {billing_info.due_date}")
+    print(f"| Total kWh               : {billing_info.consumption}")
+    print(f"| Total Current Amount    : {total_amount_due:.2f}")
+    print(f"| Next Meter Reading      : {billing_info.get_next_meter_reading_date()}")
+    print("|----------------------------------------------|")
+
+
+    print(f"\nTotal Amount Due: PHP {total_amount_due:.2f}")
+    print("=======================================================")
+
+
+def main():
+    bill = ElectricBill()
+    display_bill(bill)
+
+if __name__ == "__main__":
+    main()
