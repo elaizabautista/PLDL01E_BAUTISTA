@@ -1,0 +1,218 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_CUSTOMERS 100
+#define MAX_NAME_LENGTH 50
+
+// Define the structure for a bank account
+struct BankAccount {
+    int account_number;
+    char customer_name[MAX_NAME_LENGTH];
+    float balance;
+    float loan_balance;
+};
+
+// Function to create a new account
+void createAccount(struct BankAccount* accounts) {
+    int account_number;
+    char customer_name[MAX_NAME_LENGTH];
+    float initial_balance;
+
+    // Prompt for account number
+    printf("\nEnter account number: ");
+    scanf("%d", &account_number);
+
+    // Hash the account number to find an index
+    int index = account_number % MAX_CUSTOMERS;
+
+    // Check if the account already exists
+    if (accounts[index].account_number == 0) {
+        accounts[index].account_number = account_number;
+
+        // Get customer name input
+        printf("Enter customer name: ");
+        getchar();  // Clear newline from input buffer before using fgets
+        fgets(accounts[index].customer_name, MAX_NAME_LENGTH, stdin);
+        accounts[index].customer_name[strcspn(accounts[index].customer_name, "\n")] = '\0';  // Remove newline
+
+        // Get initial balance input
+        printf("Enter initial balance: ");
+        scanf("%f", &initial_balance);
+
+        // Initialize account details
+        accounts[index].balance = initial_balance;
+        accounts[index].loan_balance = 0.0;
+
+        printf("\nAccount created successfully for %s with account number %d\n", 
+               accounts[index].customer_name, account_number);
+    } else {
+        printf("\nAccount already exists with that number.\n");
+    }
+}
+
+// Function to find an account based on account number
+struct BankAccount* findAccount(struct BankAccount* accounts, int account_number) {
+    int index = account_number % MAX_CUSTOMERS;
+    if (accounts[index].account_number == account_number) {
+        return &accounts[index];
+    }
+    return NULL;
+}
+
+// Function to deposit money
+void deposit(struct BankAccount* account) {
+    float amount;
+    printf("\nEnter deposit amount: ");
+    scanf("%f", &amount);
+
+    if (amount > 0) {
+        account->balance += amount;
+        printf("Deposited %.2f. New balance: %.2f\n", amount, account->balance);
+    } else {
+        printf("Invalid deposit amount.\n");
+    }
+}
+
+// Function to withdraw money
+void withdraw(struct BankAccount* account) {
+    float amount;
+    printf("\nEnter withdrawal amount: ");
+    scanf("%f", &amount);
+
+    if (amount > 0 && account->balance >= amount) {
+        account->balance -= amount;
+        printf("Withdrew %.2f. New balance: %.2f\n", amount, account->balance);
+    } else {
+        printf("Insufficient funds or invalid amount.\n");
+    }
+}
+
+// Function to apply for a loan
+void applyForLoan(struct BankAccount* account) {
+    float loan_amount;
+    printf("\nEnter loan amount: ");
+    scanf("%f", &loan_amount);
+
+    if (loan_amount > 0 && account->loan_balance == 0) {
+        account->loan_balance = loan_amount;
+        account->balance += loan_amount;
+        printf("Loan approved for %.2f. New balance: %.2f\n", loan_amount, account->balance);
+    } else if (account->loan_balance > 0) {
+        printf("You already have an active loan.\n");
+    } else {
+        printf("Invalid loan amount.\n");
+    }
+}
+
+// Function to repay a loan
+void repayLoan(struct BankAccount* account) {
+    float repayment_amount;
+    printf("\nEnter repayment amount: ");
+    scanf("%f", &repayment_amount);
+
+    if (repayment_amount > 0 && repayment_amount <= account->loan_balance) {
+        account->loan_balance -= repayment_amount;
+        account->balance -= repayment_amount;
+        printf("Loan repaid. Remaining loan balance: %.2f\n", account->loan_balance);
+    } else {
+        printf("Invalid repayment amount.\n");
+    }
+}
+
+// Function to generate account statement
+void generateStatement(struct BankAccount* account) {
+    printf("\n===== Account Statement =====\n");
+    printf("Account Holder: %s\n", account->customer_name);
+    printf("Account Number: %d\n", account->account_number);
+    printf("Balance: %.2f\n", account->balance);
+    printf("Loan Balance: %.2f\n", account->loan_balance);
+    printf("=============================\n");
+}
+
+int main() {
+    int choice, account_number;
+    struct BankAccount accounts[MAX_CUSTOMERS] = {0};  // Initialize accounts to 0
+
+    while (1) {
+        printf("\n===================================\n");
+        printf(" Welcome to the Banking System\n");
+        printf("===================================\n");
+        printf("1. Create Account\n");
+        printf("2. Access Account\n");
+        printf("3. Exit\n");
+        printf("===================================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                createAccount(accounts);
+                break;
+
+            case 2:
+                printf("\nEnter account number to access: ");
+                scanf("%d", &account_number);
+
+                struct BankAccount* account = findAccount(accounts, account_number);
+
+                if (account != NULL) {
+                    int account_choice;
+
+                    while (1) {
+                        printf("\n===================================\n");
+                        printf("    Account Menu\n");
+                        printf("===================================\n");
+                        printf("1. Deposit\n");
+                        printf("2. Withdraw\n");
+                        printf("3. Apply for Loan\n");
+                        printf("4. Repay Loan\n");
+                        printf("5. Generate Statement\n");
+                        printf("6. Exit Account\n");
+                        printf("===================================\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &account_choice);
+
+                        switch (account_choice) {
+                            case 1:
+                                deposit(account);
+                                break;
+                            case 2:
+                                withdraw(account);
+                                break;
+                            case 3:
+                                applyForLoan(account);
+                                break;
+                            case 4:
+                                repayLoan(account);
+                                break;
+                            case 5:
+                                generateStatement(account);
+                                break;
+                            case 6:
+                                printf("Exiting account...\n");
+                                break;
+                            default:
+                                printf("Invalid choice.\n");
+                        }
+
+                        if (account_choice == 6) {
+                            break;
+                        }
+                    }
+                } else {
+                    printf("Account not found.\n");
+                }
+                break;
+
+            case 3:
+                printf("Exiting system...\n");
+                return 0;
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
