@@ -21,7 +21,7 @@ image_frame = design.frame(20, 100, 100, 100)  # Placeholder for the employee im
 design.label("Image", 35, 140, font=("Arial", 10), width=50)
 
 # Update this image path to match the actual path on your computer
-image_path = r"C:\Users\acer\Downloads\seri.jpg"
+image_path = ("C:\\Users\\acer\\Desktop\\useraccount.png")
 design.add_image(20, 100, image_path)
 
 # Basic Info Fields
