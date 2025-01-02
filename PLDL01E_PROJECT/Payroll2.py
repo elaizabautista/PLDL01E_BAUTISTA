@@ -1,5 +1,5 @@
 import tkinter as tk
-from Payroll1 import DesignGUI  # Import the DesignGUI class from Payroll1.py
+from Payroll1 import DesignGUI
 
 # Main window
 window = tk.Tk()
@@ -17,14 +17,14 @@ design.label("SE-RI'S CHOICE PAYROLL", 300, 20, font=("Arial", 16, "bold"), fg="
 design.label("EMPLOYEE BASIC INFO:", 20, 60, font=("Arial", 12, "bold"), fg="#8B1C62")
 
 # Image frame for employee picture
-image_frame = design.frame(20, 100, 100, 100)  # Placeholder for the employee image
+image_frame = design.frame(20, 100, 100, 100)
 design.label("Image", 35, 140, font=("Arial", 10), width=50)
 
-# Update this image path to match the actual path on your computer
+
 image_path = ("C:\\Users\\acer\\Desktop\\useraccount.png")
 design.add_image(20, 100, image_path)
 
-# Basic Info Fields
+
 design.label("Employee Number:", 130, 110, fg="#6E2C65")
 employee_number = design.entry(250, 110)
 design.label("Search Employee:", 130, 140, fg="#6E2C65")
